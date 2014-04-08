@@ -1,0 +1,63 @@
+<polymer-element name="github-gist" attributes="gistid">
+    <template>
+        <div id="gist"></div>
+    </template>
+    <script>
+        Polymer('github-gist', {
+            gistid: '',
+            ready: function(){
+                //this.loadJSON();
+            },
+
+            insertHTML: function(htmlString){
+                if(htmlString){
+                    this.$.gist.innerHTML = htmlString;
+                }
+            },
+
+            processResponse: function(object){
+                if(object && object.div){
+                    if (object.stylesheet && object.stylesheet.indexOf('http') !== 0){
+                        if(object.stylesheet.indexOf('/') !== 0){
+                            object.stylesheet = '/' + object.stylesheet;
+                        }
+                        object.stylesheet = 'https://gist.github.com' + object.stylesheet;
+                        linkTag = document.createElement('link');
+                        head = document.querySelector('head');
+
+                        linkTag.type = 'text/css';
+                        linkTag.rel = 'stylesheet';
+                        linkTag.href = object.stylesheet;
+                        head.insertBefore(linkTag, head.firstChild);
+                        this.insertHTML(object.div);
+                    }
+                }
+            },
+
+            gistidChanged: function(){
+                this.loadJSON();
+            },
+
+            loadJSON: function(){
+                var script = document.body.querySelector('script') || null;
+                if(script){
+                    script.removeEventListener('error');
+                    document.body.removeChild(script);
+                }
+
+                getResponse = function(object){
+                    this.processResponse(object);
+                }.bind(this);
+
+                script = document.createElement('script');
+                script.src = 'https://gist.github.com/' + this.gistid + '.json?callback=getResponse';
+                document.body.appendChild(script);
+
+                script.addEventListener('error', function(e){
+                    var htmlString = '<p>Loading gist failed..</p>';
+                    this.insertHTML(htmlString);
+                }.bind(this));
+            }
+        });
+    </script>
+</polymer-element>
