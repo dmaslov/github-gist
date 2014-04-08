@@ -2,17 +2,50 @@
     <template>
         <link id="link">
         <div id="gist"></div>
+        <div id="script"></div>
     </template>
     <script>
         Polymer('github-gist', {
             gistid: '',
+
             ready: function(){
                 //this.loadJSON();
             },
 
-            insertHTML: function(htmlString){
-                if(htmlString){
-                    this.$.gist.innerHTML = htmlString;
+            gistidChanged: function(){
+                this.loadJSON();
+            },
+
+            loadJSON: function(){
+                var script = this.$.script.querySelector('script') || null;
+                if(script){
+                    if(window.removeEventListener){
+                        script.removeEventListener('error');
+                    }
+                    else{
+                        script.detachEvent('onerror');
+                    }
+                    this.$.script.removeChild(script);
+                }
+
+                getResponse = function(object){
+                    this.processResponse(object);
+                }.bind(this);
+
+                script = document.createElement('script');
+                script.src = 'https://gist.github.com/' + this.gistid + '.json?callback=getResponse';
+                this.$.script.appendChild(script);
+
+                var eventCallback = function(){
+                    var htmlString = '<p>Loading gist failed..</p>';
+                    this.insertHTML(htmlString);
+                }.bind(this);
+
+                if(window.addEventListener){
+                    script.addEventListener('error', eventCallback);
+                }
+                else{
+                    script.attachEvent('onerror', eventCallback);
                 }
             },
 
@@ -31,41 +64,9 @@
                 }
             },
 
-            gistidChanged: function(){
-                this.loadJSON();
-            },
-
-            loadJSON: function(){
-                var script = document.body.querySelector('script') || null;
-                if(script){
-                    if(window.removeEventListener){
-                        script.removeEventListener('error');
-                    }
-                    else{
-                        script.detachEvent('onerror');
-                    }
-
-                    document.body.removeChild(script);
-                }
-
-                getResponse = function(object){
-                    this.processResponse(object);
-                }.bind(this);
-
-                script = document.createElement('script');
-                script.src = 'https://gist.github.com/' + this.gistid + '.json?callback=getResponse';
-                document.body.appendChild(script);
-
-                var eventCallback = function(){
-                    var htmlString = '<p>Loading gist failed..</p>';
-                    this.insertHTML(htmlString);
-                }.bind(this);
-
-                if(window.addEventListener){
-                    script.addEventListener('error', eventCallback);
-                }
-                else{
-                    script.attachEvent('onerror', eventCallback);
+            insertHTML: function(htmlString){
+                if(htmlString){
+                    this.$.gist.innerHTML = htmlString;
                 }
             }
         });
