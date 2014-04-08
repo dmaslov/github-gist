@@ -17,18 +17,17 @@
 
             processResponse: function(object){
                 if(object && object.div){
-                    if (object.stylesheet && object.stylesheet.indexOf('http') !== 0){
+                    if(object.stylesheet && object.stylesheet.indexOf('http') !== 0){
                         if(object.stylesheet.indexOf('/') !== 0){
                             object.stylesheet = '/' + object.stylesheet;
                         }
                         object.stylesheet = 'https://gist.github.com' + object.stylesheet;
-                        linkTag = document.createElement('link');
-                        head = document.querySelector('head');
+                        var linkTag = document.createElement('link'),
+                            headElement = document.querySelector('head');
 
-                        linkTag.type = 'text/css';
                         linkTag.rel = 'stylesheet';
                         linkTag.href = object.stylesheet;
-                        head.insertBefore(linkTag, head.firstChild);
+                        headElement.insertBefore(linkTag, headElement.firstChild);
                         this.insertHTML(object.div);
                     }
                 }
@@ -41,7 +40,13 @@
             loadJSON: function(){
                 var script = document.body.querySelector('script') || null;
                 if(script){
-                    script.removeEventListener('error');
+                    if(window.removeEventListener){
+                        script.removeEventListener('error');
+                    }
+                    else{
+                        script.detachEvent('onerror');
+                    }
+
                     document.body.removeChild(script);
                 }
 
@@ -53,10 +58,17 @@
                 script.src = 'https://gist.github.com/' + this.gistid + '.json?callback=getResponse';
                 document.body.appendChild(script);
 
-                script.addEventListener('error', function(e){
+                var eventCallback = function(){
                     var htmlString = '<p>Loading gist failed..</p>';
                     this.insertHTML(htmlString);
-                }.bind(this));
+                }.bind(this);
+
+                if(window.addEventListener){
+                    script.addEventListener('error', eventCallback);
+                }
+                else{
+                    script.attachEvent('onerror', eventCallback);
+                }
             }
         });
     </script>
