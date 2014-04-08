@@ -1,5 +1,6 @@
 <polymer-element name="github-gist" attributes="gistid">
     <template>
+        <link id="link">
         <div id="gist"></div>
     </template>
     <script>
@@ -22,12 +23,9 @@
                             object.stylesheet = '/' + object.stylesheet;
                         }
                         object.stylesheet = 'https://gist.github.com' + object.stylesheet;
-                        var linkTag = document.createElement('link'),
-                            headElement = document.querySelector('head');
 
-                        linkTag.rel = 'stylesheet';
-                        linkTag.href = object.stylesheet;
-                        headElement.insertBefore(linkTag, headElement.firstChild);
+                        this.$.link.rel = 'stylesheet';
+                        this.$.link.href = object.stylesheet;
                         this.insertHTML(object.div);
                     }
                 }
