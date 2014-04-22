@@ -50,17 +50,17 @@
             },
 
             processResponse: function(object){
-                if(object && object.div){
-                    if(object.stylesheet && object.stylesheet.indexOf('http') !== 0){
+                if(object && object.div && object.stylesheet){
+                    if(object.stylesheet.indexOf('http') !== 0){
                         if(object.stylesheet.indexOf('/') !== 0){
                             object.stylesheet = '/' + object.stylesheet;
                         }
                         object.stylesheet = 'https://gist.github.com' + object.stylesheet;
-
-                        this.$.link.rel = 'stylesheet';
-                        this.$.link.href = object.stylesheet;
-                        this.insertHTML(object.div);
                     }
+
+                    this.$.link.rel = 'stylesheet';
+                    this.$.link.href = object.stylesheet;
+                    this.insertHTML(object.div);
                 }
             },
 
