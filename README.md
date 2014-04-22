@@ -32,7 +32,7 @@ Or use components which bower has loaded:
 * Import Custom Element:
 
 ```
-<link rel="import" href="src/github-gist.html">
+<link rel="import" href="bower_components/github-gist/src/github-gist.html">
 ```
 
 * Start using it!
