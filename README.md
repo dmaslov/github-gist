@@ -16,13 +16,7 @@ Install using [Bower](http://bower.io):
 
 ## Usage
 
-* Import Web Components' polyfill (platform.js)
-
-```
-<script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.2.2/platform.js"></script>
-```
-
-Or use components which bower has loaded:
+* Import Web Components' polyfill:
 
 ```
 <script src="bower_components/platform/platform.js"></script>
