@@ -28,12 +28,15 @@
                     this.$.script.removeChild(script);
                 }
 
-                getResponse = function(object){
+                var callbackFunc = callbackFuncName + '_' + callbackId++;
+
+                window[callbackFunc] = function(object){
                     this.processResponse(object);
                 }.bind(this);
 
                 script = document.createElement('script');
-                script.src = 'https://gist.github.com/' + this.gistid + '.json?callback=getResponse';
+
+                script.src = 'https://gist.github.com/' + this.gistid + '.json?callback=' + callbackFunc;
                 this.$.script.appendChild(script);
 
                 var eventCallback = function(){
@@ -69,5 +72,7 @@
                 }
             }
         });
+        var callbackFuncName = 'getResponse';
+        var callbackId = 0;
     </script>
 </polymer-element>
