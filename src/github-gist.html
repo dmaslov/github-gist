@@ -2,10 +2,10 @@
     <template></template>
     <script>
         Polymer('github-gist', {
-            gistid: '',
-            styleEl: '',
-            gistEl: '',
-            scriptEl: '',
+            gistid: null,
+            styleEl: null,
+            gistEl: null,
+            scriptEl: null,
 
             ready: function(){
                 this.createElements();
@@ -54,7 +54,7 @@
             },
 
             applyScript: function(scrString){
-                var eventCallback = function(){
+                var errorCallback = function(){
                     var htmlString = '<p>Loading gist failed..</p>';
                     this.applyGist(htmlString);
                 }.bind(this);
@@ -68,10 +68,10 @@
 
                 if(window.addEventListener){
                     this.scriptEl.removeEventListener('error');
-                    this.scriptEl.addEventListener('error', eventCallback);
+                    this.scriptEl.addEventListener('error', errorCallback);
                 }
                 else{
-                    this.scriptEl.attachEvent('onerror', eventCallback);
+                    this.scriptEl.attachEvent('onerror', errorCallback);
                     this.scriptEl.detachEvent('onerror');
                 }
             },
