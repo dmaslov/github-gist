@@ -26,7 +26,7 @@ Install using [Bower](http://bower.io):
 * Import Custom Element:
 
 ```
-<link rel="import" href="bower_components/github-gist/src/github-gist.html">
+<link rel="import" href="bower_components/github-gist/github-gist.html">
 ```
 
 * Start using it!
