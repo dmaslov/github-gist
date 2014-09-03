@@ -37,6 +37,8 @@ Install using [Bower](http://bower.io):
 
 * You can use your own stylesheets
 
+![monokai.css](http://i.imgur.com/abADNVW.png)
+
 Provide path to your external css file to `stylesheet` attribute
 
 ```
