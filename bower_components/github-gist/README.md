@@ -35,11 +35,26 @@ Install using [Bower](http://bower.io):
 <github-gist gistid="e54a2ed1b12934d3e134"></github-gist>
 ```
 
+* You can use your own stylesheets
+
+![monokai.css](http://i.imgur.com/abADNVW.png)
+
+Provide path to your external css file to `stylesheet` attribute
+
+```
+<github-gist gistid="e54a2ed1b12934d3e134" stylesheet="themes/monokai.css"></github-gist>
+```
+
+We added example stylesheet `monokai.css` by [@hofiorg](https://github.com/hofiorg) in `themes` folder.
+
+##### Feel free to populate our stylesheet library!
+
 ## Options
 
 Attribute  | Options                   | Default             | Description
 ---        | ---                       | ---                 | ---
 `gistid`      | *string*                  | ``                  | id of gist that will be loaded
+`stylesheet`      | *string*                  | ``                  | path to css file
 
 
 ## Examples:

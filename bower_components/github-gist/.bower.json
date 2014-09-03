@@ -1,6 +1,6 @@
 {
   "name": "github-gist",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "authors": [
     "Dmitry Maslov <maslov.dmitrij@gmail.com>"
   ],
@@ -22,15 +22,15 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#~0.3.0"
+    "polymer": "Polymer/polymer#0.4.0"
   },
-  "_release": "0.1.1",
+  "_release": "1.0.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.1",
-    "commit": "ed597aea96ba2f299deba55ada0869166524c4f0"
+    "tag": "1.0.0",
+    "commit": "e9d06f5c7b15682acb3146623d3abde85f307e5b"
   },
   "_source": "git://github.com/dmaslov/github-gist.git",
-  "_target": "~0.1.1",
+  "_target": "1.0.0",
   "_originalSource": "github-gist"
 }
