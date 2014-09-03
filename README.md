@@ -40,6 +40,7 @@ Install using [Bower](http://bower.io):
 Attribute  | Options                   | Default             | Description
 ---        | ---                       | ---                 | ---
 `gistid`      | *string*                  | ``                  | id of gist that will be loaded
+`stylesheet`      | *string*                  | ``                  | path to css file
 
 
 ## Examples:
