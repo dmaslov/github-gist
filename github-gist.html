@@ -4,6 +4,7 @@
         Polymer({
             gistid: null,
             stylesheet: null,
+            defaultStylesheet: null,
             styleEl: null,
             gistEl: null,
             scriptEl: null,
@@ -17,6 +18,12 @@
                 this.loadJSON();
             },
 
+            stylesheetChanged: function(){
+              //toggle themes without process response (if external script toggles stylesheet attribute)
+              this.stylesheet = this.stylesheet || this.defaultStylesheet
+              this.applyStyle(this.stylesheet);
+            },
+
             loadJSON: function(){
                 var callbackFunc = callbackFuncName + '_' + callbackId++;
                 window[callbackFunc] = function(object){
@@ -28,20 +35,19 @@
             },
 
             processResponse: function(object){
-                if(this.stylesheet !== null) {
-                    this.applyStyle(this.stylesheet);
-                    this.applyGist(object.div);
+                if(object && object.div && object.stylesheet){
+                  if(object.stylesheet.indexOf('http') !== 0){
+                      if(object.stylesheet.indexOf('/') !== 0){
+                          object.stylesheet = '/' + object.stylesheet;
+                      }
+                      object.stylesheet = 'https://gist.github.com' + object.stylesheet;
+                  }
+                  this.defaultStylesheet = object.stylesheet || null;
                 }
-                else if(object && object.div && object.stylesheet){
-                    if(object.stylesheet.indexOf('http') !== 0){
-                        if(object.stylesheet.indexOf('/') !== 0){
-                            object.stylesheet = '/' + object.stylesheet;
-                        }
-                        object.stylesheet = 'https://gist.github.com' + object.stylesheet;
-                    }
-                    this.applyStyle(object.stylesheet);
-                    this.applyGist(object.div);
-                }
+
+                this.stylesheet = this.stylesheet || this.defaultStylesheet;
+                this.applyStyle(this.stylesheet);
+                this.applyGist(object.div);
             },
 
             applyGist: function(htmlString){
