@@ -1,7 +1,7 @@
 <polymer-element name="github-gist" attributes="gistid,stylesheet">
     <template></template>
     <script>
-        Polymer('github-gist', {
+        Polymer({
             gistid: null,
             stylesheet: null,
             styleEl: null,
@@ -9,6 +9,7 @@
             scriptEl: null,
 
             ready: function(){
+                this.stylesheet = this.stylesheet || null;
                 this.createElements();
             },
 
@@ -27,7 +28,7 @@
             },
 
             processResponse: function(object){
-                if(this.stylesheet != null) {
+                if(this.stylesheet !== null) {
                     this.applyStyle(this.stylesheet);
                     this.applyGist(object.div);
                 }
