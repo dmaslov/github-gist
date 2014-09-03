@@ -45,7 +45,9 @@ Provide path to your external css file to `stylesheet` attribute
 <github-gist gistid="e54a2ed1b12934d3e134" stylesheet="themes/monokai.css"></github-gist>
 ```
 
-We added example stylesheet `monokai.css` by [@hofiorg](https://github.com/hofiorg) in `themes` folder. Feel free to populate our stylesheet library!
+We added example stylesheet `monokai.css` by [@hofiorg](https://github.com/hofiorg) in `themes` folder.
+
+##### Feel free to populate our stylesheet library!
 
 ## Options
 
