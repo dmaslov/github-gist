@@ -15,7 +15,9 @@
   function eventHandler(e) {
     e.stopPropagation();
     e.preventDefault();
-
+    if(e.target.classList.contains('active')){
+      return;
+    }
     var activeBtn = e.target,
         activeBtnId = e.target.id;
 
