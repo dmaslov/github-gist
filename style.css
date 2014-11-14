@@ -1,0 +1,44 @@
+body{
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  font-size: 14px;
+  margin-left: 30px;
+}
+
+.top{
+  margin-bottom: 30px;
+  position: relative;
+}
+
+paper-input{
+  margin-right: 40px;
+  width: 156px;
+}
+
+.theme{
+  position: absolute;
+  bottom: 11px;
+}
+
+paper-button.active {
+  background: #4285f4;
+  color: #fff;
+}
+
+
+@media (max-width: 767px) {
+  .hidden-xs {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .hidden-sm {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hidden-md {
+    display: none !important;
+  }
+}
