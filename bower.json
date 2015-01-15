@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "github-gist": "github-gist#1.1.4",
+    "github-gist": "github-gist#1.1.5",
     "paper-elements": "Polymer/paper-elements#~0.5.1"
   }
 }

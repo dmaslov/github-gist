@@ -1,6 +1,6 @@
 {
   "name": "github-gist",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "authors": [
     "Dmitry Maslov <maslov.dmitrij@gmail.com>"
   ],
@@ -17,9 +17,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "bower_components"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^0.5.2"
@@ -27,13 +25,13 @@
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^2.0.5"
   },
-  "_release": "1.1.4",
+  "_release": "1.1.5",
   "_resolution": {
     "type": "version",
-    "tag": "1.1.4",
-    "commit": "498cdd041346653afd5ff493ebe0b8636e24a7e8"
+    "tag": "1.1.5",
+    "commit": "bb05c7c6ac6e00545b8866a3ef3fc43c62234173"
   },
   "_source": "git://github.com/dmaslov/github-gist.git",
-  "_target": "1.1.4",
+  "_target": "1.1.5",
   "_originalSource": "github-gist"
 }
