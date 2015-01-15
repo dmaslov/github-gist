@@ -1,105 +1,123 @@
+<link rel="import" href="../polymer/polymer.html">
+
 <polymer-element name="github-gist" attributes="gistid,stylesheet">
-    <template></template>
-    <script>
-        Polymer({
-            gistid: null,
-            stylesheet: null,
-            defaultStylesheet: null,
-            styleEl: null,
-            gistEl: null,
-            scriptEl: null,
+  <template></template>
+  <script>
+    Polymer({
+      gistid: null,
+      stylesheet: null,
+      defaultStylesheet: null,
+      styleEl: null,
+      gistEl: null,
+      scriptEl: null,
 
-            ready: function(){
-                this.stylesheet = this.stylesheet || null;
-                this.createElements();
-            },
+      ready: function() {
+        this.stylesheet = this.stylesheet || null;
+        this.createElements();
+      },
 
-            gistidChanged: function(){
-                this.loadJSON();
-            },
+      gistidChanged: function() {
+        this.loadJSON();
+      },
 
-            stylesheetChanged: function(){
-              //toggle themes without process response (if external script toggles stylesheet attribute)
-              this.stylesheet = this.stylesheet || this.defaultStylesheet
-              this.applyStyle(this.stylesheet);
-            },
+      fireEvent: function(e) {
+        this.fire(e.name, e.detail);
+      },
 
-            loadJSON: function(){
-                var callbackFunc = callbackFuncName + '_' + callbackId++;
-                window[callbackFunc] = function(object){
-                    this.processResponse(object);
-                }.bind(this);
+      stylesheetChanged: function() {
+        //toggle themes without process response (if external script toggles stylesheet attribute)
+        this.stylesheet = this.stylesheet || this.defaultStylesheet
+        this.applyStyle(this.stylesheet);
+      },
 
-                var srcString = 'https://gist.github.com/' + this.gistid + '.json?callback=' + callbackFunc;
-                this.applyScript(srcString);
-            },
+      loadJSON: function() {
+        this.callbackFunc = callbackFuncName + '_' + callbackId++;
+        window[this.callbackFunc] = function(object) {
+          this.processResponse(object);
+        }.bind(this);
 
-            processResponse: function(object){
-                if(object && object.div && object.stylesheet){
-                  if(object.stylesheet.indexOf('http') !== 0){
-                      if(object.stylesheet.indexOf('/') !== 0){
-                          object.stylesheet = '/' + object.stylesheet;
-                      }
-                      object.stylesheet = 'https://gist.github.com' + object.stylesheet;
-                  }
-                  this.defaultStylesheet = object.stylesheet || null;
-                }
+        var srcString = 'https://gist.github.com/' + this.gistid + '.json?callback=' + this.callbackFunc;
+        this.applyScript(srcString);
+      },
 
-                this.stylesheet = this.stylesheet || this.defaultStylesheet;
-                this.applyStyle(this.stylesheet);
-                this.applyGist(object.div);
-            },
-
-            applyGist: function(htmlString){
-                if(htmlString){
-                    this.gistEl.innerHTML = htmlString;
-                }
-            },
-
-            applyStyle: function(scrString){
-                if(scrString){
-                    while(this.styleEl.hasChildNodes()){
-                        this.styleEl.removeChild(this.styleEl.lastChild);
-                    }
-                    this.styleEl.appendChild(document.createTextNode('@import url("' + scrString + '");'));
-                }
-            },
-
-            applyScript: function(scrString){
-                var errorCallback = function(){
-                    var htmlString = '<p>Loading gist failed..</p>';
-                    this.applyGist(htmlString);
-                }.bind(this);
-
-                if(scrString){
-                    this.shadowRoot.removeChild(this.scriptEl);
-                    this.scriptEl = document.createElement('script');
-                    this.scriptEl.src = scrString;
-                    this.shadowRoot.appendChild(this.scriptEl);
-                }
-
-                if(window.addEventListener){
-                    this.scriptEl.removeEventListener('error');
-                    this.scriptEl.addEventListener('error', errorCallback);
-                }
-                else{
-                    this.scriptEl.attachEvent('onerror', errorCallback);
-                    this.scriptEl.detachEvent('onerror');
-                }
-            },
-
-            createElements: function(){
-                if(!(this.styleEl && this.gistEl && this.scriptEl)){
-                    this.styleEl = document.createElement('style'),
-                    this.gistEl = document.createElement('div'),
-                    this.scriptEl = document.createElement('script');
-                    this.shadowRoot.appendChild(this.styleEl);
-                    this.shadowRoot.appendChild(this.gistEl);
-                    this.shadowRoot.appendChild(this.scriptEl);
-                }
+      processResponse: function(object) {
+        if(object && object.div && object.stylesheet) {
+          if(object.stylesheet.indexOf('http') !== 0) {
+            if(object.stylesheet.indexOf('/') !== 0) {
+              object.stylesheet = '/' + object.stylesheet;
             }
-        });
-        var callbackFuncName = 'getResponse';
-        var callbackId = 0;
-    </script>
+            object.stylesheet = 'https://gist.github.com' + object.stylesheet;
+          }
+          this.defaultStylesheet = object.stylesheet || null;
+        }
+
+        this.stylesheet = this.stylesheet || this.defaultStylesheet;
+        this.applyStyle(this.stylesheet);
+        this.applyGist(object.div);
+        this.clearScope();
+
+        var _event = {
+          name: 'github-gist-ready',
+          detail: {gistId: this.gistid}
+        };
+        this.fireEvent(_event);
+      },
+
+      applyGist: function(htmlString) {
+        if(htmlString) {
+          this.gistEl.innerHTML = htmlString;
+        }
+      },
+
+      applyStyle: function(scrString) {
+        if(scrString) {
+          while(this.styleEl.hasChildNodes()) {
+            this.styleEl.removeChild(this.styleEl.lastChild);
+          }
+          this.styleEl.appendChild(document.createTextNode('@import url("' + scrString + '");'));
+        }
+      },
+
+      applyScript: function(scrString) {
+        var errorCallback = function() {
+          var htmlString = '<p>Loading gist failed..</p>';
+          this.applyGist(htmlString);
+          this.clearScope();
+        }.bind(this);
+
+        if(scrString) {
+          this.shadowRoot.removeChild(this.scriptEl);
+          this.scriptEl = document.createElement('script');
+          this.scriptEl.src = scrString;
+          this.shadowRoot.appendChild(this.scriptEl);
+        }
+
+        if(window.addEventListener) {
+          this.scriptEl.removeEventListener('error');
+          this.scriptEl.addEventListener('error', errorCallback);
+        }
+        else {
+          this.scriptEl.attachEvent('onerror', errorCallback);
+          this.scriptEl.detachEvent('onerror');
+        }
+      },
+
+      createElements: function() {
+        if(!(this.styleEl && this.gistEl && this.scriptEl)) {
+          this.styleEl = document.createElement('style'),
+            this.gistEl = document.createElement('div'),
+            this.scriptEl = document.createElement('script');
+          this.shadowRoot.appendChild(this.styleEl);
+          this.shadowRoot.appendChild(this.gistEl);
+          this.shadowRoot.appendChild(this.scriptEl);
+        }
+      },
+
+      clearScope: function() {
+        delete window[this.callbackFunc];
+      }
+    });
+    var callbackFuncName = 'getResponse';
+    var callbackId = 0;
+  </script>
 </polymer-element>
