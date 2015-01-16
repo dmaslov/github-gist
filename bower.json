@@ -18,7 +18,8 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "wct.conf.js"
+    "wct.conf.js",
+    ".travis.yml"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^0.5.2"
