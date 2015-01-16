@@ -19,7 +19,6 @@ Install using [Bower](http://bower.io):
 * Import Custom Element:
 
 ```
-<link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/github-gist/github-gist.html">
 ```
 
@@ -55,6 +54,13 @@ Attribute  | Options                   | Default             | Description
 
 ```
 <github-gist gistid="e54a2ed1b12934d3e134"></github-gist>
+```
+
+## Tests
+
+```shell
+npm install -g web-component-tester
+wct
 ```
 ## License
 

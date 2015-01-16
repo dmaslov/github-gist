@@ -76,6 +76,12 @@
           }
           this.styleEl.appendChild(document.createTextNode('@import url("' + scrString + '");'));
         }
+
+        var _event = {
+          name: 'github-gist-stylesheet-changed',
+          detail: {stylesheet: scrString}
+        };
+        this.fireEvent(_event);
       },
 
       applyScript: function(scrString) {

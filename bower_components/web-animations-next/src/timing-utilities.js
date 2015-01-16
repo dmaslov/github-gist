@@ -29,18 +29,23 @@
       direction: 'normal',
       easing: 'linear',
     };
-    if (typeof timingInput == 'number') {
+    if (typeof timingInput == 'number' && !isNaN(timingInput)) {
       timing.duration = timingInput;
     } else if (timingInput !== undefined) {
       Object.getOwnPropertyNames(timingInput).forEach(function(property) {
         if (timingInput[property] != 'auto') {
-          if (typeof timing[property] == 'number' && typeof timingInput[property] != 'number' && property != 'duration') {
-            return;
+          if (typeof timing[property] == 'number' || property == 'duration') {
+            if (typeof timingInput[property] != 'number' || isNaN(timingInput[property])) {
+              return;
+            }
           }
           if ((property == 'fill') && (fills.indexOf(timingInput[property]) == -1)) {
             return;
           }
           if ((property == 'direction') && (directions.indexOf(timingInput[property]) == -1)) {
+            return;
+          }
+          if (property == 'playbackRate' && shared.isDeprecated('AnimationTiming.playbackRate', '2014-11-28', 'Use AnimationPlayer.playbackRate instead.')) {
             return;
           }
           timing[property] = timingInput[property];
@@ -194,8 +199,6 @@
     var currentDirectionIsForwards = timing.direction == 'normal' || timing.direction == (currentIterationIsOdd ? 'alternate-reverse' : 'alternate');
     var directedTime = currentDirectionIsForwards ? iterationTime : iterationDuration - iterationTime;
     var timeFraction = directedTime / iterationDuration;
-    if (isNaN(timeFraction))
-      return null;
     return iterationDuration * timing.easing(timeFraction);
   }
 

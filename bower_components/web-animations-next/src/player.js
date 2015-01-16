@@ -68,11 +68,14 @@
       return this._currentTime;
     },
     set currentTime(newTime) {
-      if (scope.restart())
-        this._startTime = null;
+      newTime = +newTime;
+      if (isNaN(newTime))
+        return;
+      scope.restart();
       if (!this.paused && this._startTime != null) {
         this._startTime = this._timeline.currentTime - newTime / this._playbackRate;
       }
+      this._currentTimePending = false;
       if (this._currentTime == newTime)
         return;
       this._tickCurrentTime(newTime, true);
@@ -82,13 +85,25 @@
       return this._startTime;
     },
     set startTime(newTime) {
+      newTime = +newTime;
+      if (isNaN(newTime))
+        return;
       if (this.paused || this._idle)
         return;
       this._startTime = newTime;
       this._tickCurrentTime((this._timeline.currentTime - this._startTime) * this.playbackRate);
       scope.invalidateEffects();
     },
-    get playbackRate() { return this._playbackRate; },
+    get playbackRate() {
+      return this._playbackRate;
+    },
+    set playbackRate(value) {
+      var oldCurrentTime = this.currentTime;
+      this._playbackRate = value;
+      if (oldCurrentTime != null) {
+        this.currentTime = oldCurrentTime;
+      }
+    },
     get finished() {
       return !this._idle && (this._playbackRate > 0 && this._currentTime >= this._totalDuration ||
           this._playbackRate < 0 && this._currentTime <= 0);
@@ -109,14 +124,11 @@
       this.paused = false;
       if (this.finished || this._idle) {
         this._currentTime = this._playbackRate > 0 ? 0 : this._totalDuration;
+        this._startTime = null;
         scope.invalidateEffects();
       }
       this._finishedFlag = false;
-      if (!scope.restart()) {
-        this._startTime = this._timeline.currentTime - this._currentTime / this._playbackRate;
-      }
-      else
-        this._startTime = null;
+      scope.restart();
       this._idle = false;
       this._ensureAlive();
     },
@@ -142,6 +154,7 @@
     },
     reverse: function() {
       this._playbackRate *= -1;
+      this._startTime = null;
       this.play();
     },
     addEventListener: function(type, handler) {
@@ -186,4 +199,4 @@
     testing.Player = scope.Player;
   }
 
-})(webAnimationsMinifill, webAnimationsTesting);
+})(webAnimations1, webAnimationsTesting);

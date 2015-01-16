@@ -1,6 +1,8 @@
 suite('animation-constructor', function() {
   setup(function() {
-    document.timeline._players = [];
+    document.timeline.getAnimationPlayers().forEach(function(player) {
+      player.cancel();
+    });
   });
 
   test('Playing an Animation makes a Player', function() {
@@ -62,5 +64,17 @@ suite('animation-constructor', function() {
     animation = new Animation(target, keyframes, {duration: 200});
     var group = new AnimationGroup([animation]);
     assert.equal(group.timing.duration, 'auto');
+  });
+
+  test('Handle null target on Animation', function() {
+    var animation = new Animation(null, function(tf) {
+      // noop
+    }, 200);
+
+    var player = document.timeline.play(animation);
+    assert.isNotNull(player);
+    tick(50);
+    tick(150);
+    assert.equal(player.currentTime, 100);
   });
 });

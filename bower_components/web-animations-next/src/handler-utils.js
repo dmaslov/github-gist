@@ -68,7 +68,7 @@
       }
     }
     var parsed = parser(string.substr(0, n));
-    return parsed ? [parsed, string.substr(n)] : undefined;
+    return parsed == undefined ? undefined : [parsed, string.substr(n)];
   }
 
   function lcm(a, b) {
@@ -174,4 +174,4 @@
   scope.mergeWrappedNestedRepeated = mergeWrappedNestedRepeated;
   scope.mergeList = mergeList;
 
-})(webAnimationsMinifill);
+})(webAnimations1);

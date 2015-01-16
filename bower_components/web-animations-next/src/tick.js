@@ -16,18 +16,29 @@
 (function(shared, scope, testing) {
   var originalRequestAnimationFrame = window.requestAnimationFrame;
   var rafCallbacks = [];
+  var rafId = 0;
   window.requestAnimationFrame = function(f) {
+    var id = rafId++;
     if (rafCallbacks.length == 0 && !WEB_ANIMATIONS_TESTING) {
       originalRequestAnimationFrame(processRafCallbacks);
     }
-    rafCallbacks.push(f);
+    rafCallbacks.push([id, f]);
+    return id;
+  };
+
+  window.cancelAnimationFrame = function(id) {
+    rafCallbacks.forEach(function(entry) {
+      if (entry[0] == id) {
+        entry[1] = function() {};
+      }
+    });
   };
 
   function processRafCallbacks(t) {
     var processing = rafCallbacks;
     rafCallbacks = [];
     tick(t);
-    processing.forEach(function(f) { f(t); });
+    processing.forEach(function(entry) { entry[1](t); });
     if (needsRetick)
       tick(t);
     applyPendingEffects();
@@ -39,7 +50,8 @@
 
   function InternalTimeline() {
     this._players = [];
-    this.currentTime = window.performance ? performance.now() : 0;
+    // Android 4.3 browser has window.performance, but not window.performance.now
+    this.currentTime = window.performance && performance.now ? performance.now() : 0;
   };
 
   InternalTimeline.prototype = {
@@ -133,4 +145,4 @@
   var timeline = new InternalTimeline();
   scope.timeline = timeline;
 
-})(webAnimationsShared, webAnimationsMinifill, webAnimationsTesting);
+})(webAnimationsShared, webAnimations1, webAnimationsTesting);

@@ -16,7 +16,7 @@
 
   function negateDimension(dimension) {
     var result = {};
-    for (k in dimension) {
+    for (var k in dimension) {
       result[k] = -dimension[k];
     }
     return result;
@@ -114,4 +114,4 @@
   var mergePositionList = scope.mergeNestedRepeated.bind(null, mergeOffsetList, ', ');
   scope.addPropertiesHandler(parsePositionList, mergePositionList, ['background-position', 'object-position']);
 
-})(webAnimationsMinifill);
+})(webAnimations1);

@@ -21,7 +21,6 @@
 
     if (this._timing.duration === 'auto')
       this._timing.duration = this.activeDuration;
-    this._internalPlayer = null;
   }
 
   window.AnimationSequence = function() {
@@ -52,4 +51,32 @@
     }
   };
 
-})(webAnimationsShared, webAnimationsMaxifill, webAnimationsTesting);
+  scope.newUnderlyingPlayerForGroup = function(group) {
+    var underlyingPlayer;
+    var ticker = function(tf) {
+      var player = underlyingPlayer._wrapper;
+      if (!player.source)
+        return;
+      if (tf == null) {
+        player._removePlayers();
+        return;
+      }
+      if (player.startTime === null)
+        return;
+
+      player._updateChildren();
+    };
+
+    underlyingPlayer = scope.timeline.play(new scope.Animation(null, ticker, group._timing));
+    return underlyingPlayer;
+  };
+
+  scope.bindPlayerForGroup = function(player) {
+    player._player._wrapper = player;
+    player._isGroup = true;
+    scope.awaitStartTime(player);
+    player._updateChildren();
+  };
+
+
+})(webAnimationsShared, webAnimationsNext, webAnimationsTesting);
