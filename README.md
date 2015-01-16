@@ -1,4 +1,4 @@
-# &lt;github-gist&gt;
+# &lt;github-gist&gt; [![Build Status](https://travis-ci.org/dmaslov/github-gist.svg?branch=master)](https://travis-ci.org/dmaslov/github-gist)
 
 A [Polymer](http://polymer-project.org) element for displaying github [gists](https://gist.github.com)
 
