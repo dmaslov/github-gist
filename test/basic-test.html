@@ -24,6 +24,7 @@
         githubGist.removeEventListener('github-gist-ready');
         githubGist.gistid = null;
         counter++;
+
         done();
       });
 
@@ -36,16 +37,37 @@
         githubGist.addEventListener('github-gist-ready', function(e) {
 
           var scriptSrc = 'https://gist.github.com/' + e.detail.gistId + '.json?callback=getResponse_' + counter,
-              defaultStylesheet = 'https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css';
+              stylePart = 'https://gist-assets.github.com/assets/embed-';
 
           flush(function(){
-            assert.equal(githubGist.gistid, e.detail.gistId);
-            assert.equal(githubGist.scriptEl.getAttribute('src'), scriptSrc);
-            assert.equal(githubGist.defaultStylesheet, defaultStylesheet);
-            assert.equal(githubGist.stylesheet, defaultStylesheet);
-            assert.isNotNull(githubGist.styleEl);
-            assert.isNotNull(githubGist.gistEl);
-            assert.isNotNull(githubGist.gistEl.querySelector('.gist'));
+            expect(githubGist.defaultStylesheet).to.be.not.empty;
+            expect(githubGist.stylesheet).to.be.not.empty;
+            expect(githubGist.styleEl).to.be.not.empty;
+            expect(githubGist.gistEl).to.be.not.empty;
+            expect(githubGist.gistEl.querySelector('.gist')).to.be.not.empty;
+
+            expect(githubGist.gistid).to.be.equal(e.detail.gistId);
+            expect(githubGist.scriptEl.getAttribute('src')).to.be.equal(scriptSrc);
+            expect(githubGist.stylesheet).to.contain(stylePart);
+            expect(githubGist.defaultStylesheet).to.be.equal(githubGist.stylesheet);
+
+            done();
+          });
+        });
+      }
+
+      function testStylesheet(done){
+        githubGist.addEventListener('github-gist-stylesheet-changed', function(e) {
+          flush(function(){
+            expect(githubGist.defaultStylesheet).to.be.not.empty;
+            expect(githubGist.defaultStylesheet).to.be.a('string');
+
+            expect(githubGist.stylesheet).to.be.not.empty;
+            expect(githubGist.stylesheet).to.be.a('string');
+            expect(githubGist.stylesheet).to.be.equal(e.detail.stylesheet);
+            expect(githubGist.stylesheet).to.be.not.equal(githubGist.defaultStylesheet);
+
+            expect(githubGist.styleEl).to.be.an('object');
 
             done();
           });
@@ -59,6 +81,11 @@
       it('should display gist if gistid property changed and it\'s VALID', function(done){
         githubGist.setAttribute('gistid', 'a772e7d43f623e1109e4');
         testValidGist(done);
+      });
+
+      it('should change theme if stylesheet property changed', function(done){
+        githubGist.setAttribute('stylesheet', 'monokai.css');
+        testStylesheet(done);
       });
     });
   </script>
