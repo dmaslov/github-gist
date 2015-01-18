@@ -28,16 +28,12 @@
         done();
       });
 
-      // after(funciton(){
-      //   counter = 0;
-      //   done();
-      // });
-
       function testValidGist(done){
         githubGist.addEventListener('github-gist-ready', function(e) {
 
           var scriptSrc = 'https://gist.github.com/' + e.detail.gistId + '.json?callback=getResponse_' + counter,
-              stylePart = 'https://gist-assets.github.com/assets/embed-';
+              stylePart = 'https://gist-assets.github.com/assets/embed-',
+              callbackName = 'getResponse_' + counter;
 
           flush(function(){
             expect(githubGist.defaultStylesheet).to.be.not.empty;
@@ -50,6 +46,7 @@
             expect(githubGist.scriptEl.getAttribute('src')).to.be.equal(scriptSrc);
             expect(githubGist.stylesheet).to.contain(stylePart);
             expect(githubGist.defaultStylesheet).to.be.equal(githubGist.stylesheet);
+            expect(window[callbackName]).to.be.undefined;
 
             done();
           });
