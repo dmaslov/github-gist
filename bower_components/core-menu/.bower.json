@@ -2,19 +2,20 @@
   "name": "core-menu",
   "private": true,
   "dependencies": {
-    "core-selector": "Polymer/core-selector#^0.5.0",
-    "core-collapse": "Polymer/core-collapse#^0.5.0",
-    "core-item": "Polymer/core-item#^0.5.0"
+    "core-selector": "Polymer/core-selector#^0.5",
+    "core-collapse": "Polymer/core-collapse#^0.5",
+    "core-a11y-keys": "Polymer/core-a11y-keys#^0.5",
+    "core-item": "Polymer/core-item#^0.5"
   },
-  "version": "0.5.2",
+  "version": "0.5.3",
   "homepage": "https://github.com/Polymer/core-menu",
-  "_release": "0.5.2",
+  "_release": "0.5.3",
   "_resolution": {
     "type": "version",
-    "tag": "0.5.2",
-    "commit": "4b2665a11a694ecd900bf7875f08d6f857bb8f9b"
+    "tag": "0.5.3",
+    "commit": "dc1c702b00bfe3c32997928bbaf6e77ce5b036ae"
   },
   "_source": "git://github.com/Polymer/core-menu.git",
-  "_target": "^0.5.0",
+  "_target": "^0.5",
   "_originalSource": "Polymer/core-menu"
 }

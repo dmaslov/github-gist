@@ -1,6 +1,6 @@
 {
   "name": "github-gist",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "authors": [
     "Dmitry Maslov <maslov.dmitrij@gmail.com>"
   ],
@@ -22,18 +22,18 @@
     ".travis.yml"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^0.5.2"
+    "polymer": "Polymer/polymer#^0.5.3"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^2.0.5"
   },
-  "_release": "1.1.7",
+  "_release": "1.1.8",
   "_resolution": {
     "type": "version",
-    "tag": "1.1.7",
-    "commit": "bb447168e4de018abc5e0eb0f0c58deee80d4bee"
+    "tag": "1.1.8",
+    "commit": "daf2bdd2b4126869d6a52ab52ee9227523e9cdc8"
   },
   "_source": "git://github.com/dmaslov/github-gist.git",
-  "_target": "1.1.7",
+  "_target": "1.1.8",
   "_originalSource": "github-gist"
 }
