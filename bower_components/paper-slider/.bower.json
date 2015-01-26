@@ -7,13 +7,13 @@
     "paper-progress": "Polymer/paper-progress#^0.5",
     "core-a11y-keys": "Polymer/core-a11y-keys#^0.5"
   },
-  "version": "0.5.3",
+  "version": "0.5.4",
   "homepage": "https://github.com/Polymer/paper-slider",
-  "_release": "0.5.3",
+  "_release": "0.5.4",
   "_resolution": {
     "type": "version",
-    "tag": "0.5.3",
-    "commit": "69a0410b6a5a171f5483b98ad9fcf1e7cb6e540f"
+    "tag": "0.5.4",
+    "commit": "36fff52691b88e6df9ba63b8cac17f3a0b82dfa4"
   },
   "_source": "git://github.com/Polymer/paper-slider.git",
   "_target": "^0.5",

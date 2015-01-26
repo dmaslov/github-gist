@@ -11,13 +11,13 @@
   "devDependencies": {
     "web-component-tester": "*"
   },
-  "version": "0.5.3",
+  "version": "0.5.4",
   "homepage": "https://github.com/Polymer/core-dropdown",
-  "_release": "0.5.3",
+  "_release": "0.5.4",
   "_resolution": {
     "type": "version",
-    "tag": "0.5.3",
-    "commit": "1b7506cafe6899fefb3034debd51d5c53822d066"
+    "tag": "0.5.4",
+    "commit": "97a17fdd9a307048ace59d368fa6caf19cf85ff1"
   },
   "_source": "git://github.com/Polymer/core-dropdown.git",
   "_target": "^0.5",

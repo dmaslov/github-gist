@@ -15,5 +15,5 @@
   "devDependencies": {
     "web-component-tester": "web-component-tester#master"
   },
-  "version": "0.5.3"
+  "version": "0.5.4"
 }

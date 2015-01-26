@@ -9,13 +9,13 @@
     "core-menu": "Polymer/core-menu#^0.5",
     "core-toolbar": "Polymer/core-toolbar#^0.5"
   },
-  "version": "0.5.3",
+  "version": "0.5.4",
   "homepage": "https://github.com/Polymer/sampler-scaffold",
-  "_release": "0.5.3",
+  "_release": "0.5.4",
   "_resolution": {
     "type": "version",
-    "tag": "0.5.3",
-    "commit": "4ad87fb2cbcc80a4b1a8e8f71e324c0f4f96042d"
+    "tag": "0.5.4",
+    "commit": "41522a78d8fcd7bffd93d8ca8538fee76d160763"
   },
   "_source": "git://github.com/Polymer/sampler-scaffold.git",
   "_target": "^0.5",

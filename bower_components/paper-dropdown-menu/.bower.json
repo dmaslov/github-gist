@@ -13,13 +13,13 @@
     "paper-item": "Polymer/paper-item#^0.5",
     "paper-shadow": "Polymer/paper-shadow#^0.5"
   },
-  "version": "0.5.3",
+  "version": "0.5.4",
   "homepage": "https://github.com/Polymer/paper-dropdown-menu",
-  "_release": "0.5.3",
+  "_release": "0.5.4",
   "_resolution": {
     "type": "version",
-    "tag": "0.5.3",
-    "commit": "f69421fc2c9b1ba75cfd039d645932c85f68bd61"
+    "tag": "0.5.4",
+    "commit": "fc3c8c34f751b651ba70fa5ffacf6fe856472867"
   },
   "_source": "git://github.com/Polymer/paper-dropdown-menu.git",
   "_target": "^0.5",
