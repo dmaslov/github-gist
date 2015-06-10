@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="../../web-component-tester/browser.js"></script>
+  <link rel="import" href="../github-gist.html">
+</head>
+<body>
+  <github-gist gistid="e54a2ed1b12934d3e134"></github-gist>
+
+  <script>
+
+    var githubGist;
+
+    describe('<github-gist>', function() {
+      before(function() {
+        githubGist = document.querySelector('github-gist');
+      });
+
+      afterEach(function(done) {
+        githubGist.removeEventListener('github-gist-stylesheet-changed');
+
+        done();
+      });
+
+      function testStylesheet(done) {
+        githubGist.addEventListener('github-gist-stylesheet-changed', function(e) {
+          flush(function() {
+            expect(githubGist.defaultStylesheet).to.be.not.empty;
+            expect(githubGist.defaultStylesheet).to.be.a('string');
+
+            expect(githubGist.stylesheet).to.be.not.empty;
+            expect(githubGist.stylesheet).to.be.a('string');
+            expect(githubGist.stylesheet).to.be.equal(e.detail.stylesheet);
+            expect(githubGist.stylesheet).to.be.not.equal(githubGist.defaultStylesheet);
+
+            expect(githubGist.querySelector('#styleEl')).to.be.an('object');
+
+            done();
+          });
+        });
+      }
+
+      it('should change theme if stylesheet property changed', function(done) {
+        githubGist.setAttribute('stylesheet', '../themes/monokai.css');
+        testStylesheet(done);
+      });
+    });
+  </script>
+</body>
+</html>

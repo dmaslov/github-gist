@@ -1,6 +1,6 @@
 {
   "name": "github-gist_demo",
-  "version": "1.1.9",
+  "version": "1.2.1",
   "authors": [
     "Dmitry Maslov <maslov.dmitrij@gmail.com>"
   ],
@@ -15,7 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "github-gist": "github-gist#1.1.9",
-    "paper-elements": "Polymer/paper-elements#~0.5.4"
+    "github-gist": "github-gist#1.2.1",
+    "paper-button": "PolymerElements/paper-button#^1.0.0",
+    "paper-input": "PolymerElements/paper-input#^1.0.0"
   }
 }
