@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="../../web-component-tester/browser.js"></script>
+  <link rel="import" href="../github-gist.html">
+</head>
+<body>
+  <github-gist gistid="e54a2ed1b12934d3e134"></github-gist>
+
+  <script>
+
+    var githubGist;
+
+    describe('<github-gist>', function() {
+      before(function() {
+        githubGist = document.querySelector('github-gist');
+      });
+
+      afterEach(function(done) {
+        githubGist.removeEventListener('github-gist-ready');
+
+        done();
+      });
+
+      function testValidGist(done) {
+        githubGist.addEventListener('github-gist-ready', function(e) {
+
+          var scriptSrcPart = 'https://gist.github.com/' + e.detail.gistId + '.json?callback=' + 'response_id_';
+          var stylePart = 'https://gist-assets.github.com/assets/embed-';
+
+          flush(function() {
+            expect(githubGist.gistid).to.be.equal(e.detail.gistId);
+
+            expect(githubGist.defaultStylesheet).to.be.not.empty;
+            expect(githubGist.defaultStylesheet).to.be.equal(githubGist.stylesheet);
+
+            expect(githubGist.stylesheet).to.be.not.empty;
+            expect(githubGist.stylesheet).to.contain(stylePart);
+
+            expect(githubGist.querySelector('#styleEl')).to.be.not.empty;
+            expect(githubGist.querySelector('#scriptEl').getAttribute('src')).to.contain(scriptSrcPart);
+            expect(githubGist.querySelector('#gistEl')).to.be.not.empty;
+            expect(githubGist.querySelector('#gistEl .gist')).to.be.an('object');
+
+            expect(window[githubGist.callbackName]).to.not.exist;
+
+            done();
+          });
+        });
+      }
+
+      it('should display gist on startup', function(done) {
+        testValidGist(done);
+      });
+
+      it('should display gist if gistid property changed and it\'s VALID', function(done) {
+        githubGist.setAttribute('gistid', 'a772e7d43f623e1109e4');
+        testValidGist(done);
+      });
+    });
+  </script>
+</body>
+</html>

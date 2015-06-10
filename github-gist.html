@@ -1,129 +1,121 @@
-<link rel="import" href="../polymer/polymer.html">
-
-<polymer-element name="github-gist" attributes="gistid,stylesheet">
-  <template></template>
-  <script>
-    Polymer({
-      gistid: null,
-      stylesheet: null,
-      defaultStylesheet: null,
-      styleEl: null,
-      gistEl: null,
-      scriptEl: null,
-
-      ready: function() {
-        this.stylesheet = this.stylesheet || null;
-        this.createElements();
+<link rel="import" href="bower_components/polymer/polymer.html">
+<dom-module id="github-gist">
+  <template>
+    <style id="styleEl"></style>
+    <div id="gistEl"></div>
+    <script id="scriptEl"></script>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'github-gist',
+    properties: {
+      gistid: {
+        type: String,
+        value: null,
+        observer: 'gistidChanged'
       },
-
-      gistidChanged: function() {
-        this.loadJSON();
+      stylesheet: {
+        type: String,
+        value: null,
+        observer: 'stylesheetChanged'
       },
-
-      fireEvent: function(e) {
-        this.fire(e.name, e.detail);
+      defaultStylesheet: {
+        type: String,
+        value: null
       },
-
-      stylesheetChanged: function() {
-        //toggle themes without process response (if external script toggles stylesheet attribute)
-        this.stylesheet = this.stylesheet || this.defaultStylesheet
-        this.applyStyle(this.stylesheet);
-      },
-
-      loadJSON: function() {
-        this.callbackFunc = callbackFuncName + '_' + callbackId++;
-        window[this.callbackFunc] = function(object) {
-          this.processResponse(object);
-        }.bind(this);
-
-        var srcString = 'https://gist.github.com/' + this.gistid + '.json?callback=' + this.callbackFunc;
-        this.applyScript(srcString);
-      },
-
-      processResponse: function(object) {
-        if(object && object.div && object.stylesheet) {
-          if(object.stylesheet.indexOf('http') !== 0) {
-            if(object.stylesheet.indexOf('/') !== 0) {
-              object.stylesheet = '/' + object.stylesheet;
-            }
-            object.stylesheet = 'https://gist.github.com' + object.stylesheet;
-          }
-          this.defaultStylesheet = object.stylesheet || null;
-        }
-
-        this.stylesheet = this.stylesheet || this.defaultStylesheet;
-        this.applyStyle(this.stylesheet);
-        this.applyGist(object.div);
-        this.clearScope();
-
-        var _event = {
-          name: 'github-gist-ready',
-          detail: {gistId: this.gistid}
-        };
-        this.fireEvent(_event);
-      },
-
-      applyGist: function(htmlString) {
-        if(htmlString) {
-          this.gistEl.innerHTML = htmlString;
-        }
-      },
-
-      applyStyle: function(scrString) {
-        if(scrString) {
-          while(this.styleEl.hasChildNodes()) {
-            this.styleEl.removeChild(this.styleEl.lastChild);
-          }
-          this.styleEl.appendChild(document.createTextNode('@import url("' + scrString + '");'));
-        }
-
-        var _event = {
-          name: 'github-gist-stylesheet-changed',
-          detail: {stylesheet: scrString}
-        };
-        this.fireEvent(_event);
-      },
-
-      applyScript: function(scrString) {
-        var errorCallback = function() {
-          var htmlString = '<p>Loading gist failed..</p>';
-          this.applyGist(htmlString);
-          this.clearScope();
-        }.bind(this);
-
-        if(scrString) {
-          this.shadowRoot.removeChild(this.scriptEl);
-          this.scriptEl = document.createElement('script');
-          this.scriptEl.src = scrString;
-          this.shadowRoot.appendChild(this.scriptEl);
-        }
-
-        if(window.addEventListener) {
-          this.scriptEl.removeEventListener('error');
-          this.scriptEl.addEventListener('error', errorCallback);
-        }
-        else {
-          this.scriptEl.attachEvent('onerror', errorCallback);
-          this.scriptEl.detachEvent('onerror');
-        }
-      },
-
-      createElements: function() {
-        if(!(this.styleEl && this.gistEl && this.scriptEl)) {
-          this.styleEl = document.createElement('style'),
-            this.gistEl = document.createElement('div'),
-            this.scriptEl = document.createElement('script');
-          this.shadowRoot.appendChild(this.styleEl);
-          this.shadowRoot.appendChild(this.gistEl);
-          this.shadowRoot.appendChild(this.scriptEl);
-        }
-      },
-
-      clearScope: function() {
-        delete window[this.callbackFunc];
+      callbackName: { //need for test
+        type: String,
+        value: null
       }
-    });
-    var callbackFuncName = 'getResponse';
-    var callbackId = 0;
-  </script>
-</polymer-element>
+    },
+
+    gistidChanged: function() {
+      this.loadJSON();
+    },
+
+    fireEvent: function(e) {
+      this.fire(e.name, e.detail);
+    },
+
+    stylesheetChanged: function() {
+      //toggle themes without process response (if external script toggles stylesheet attribute)
+      this.stylesheet = this.stylesheet || this.defaultStylesheet;
+      this.applyStyle(this.stylesheet);
+    },
+
+    loadJSON: function() {
+      var url = 'https://gist.github.com/' + this.gistid + '.json';
+      this.jsonp(url, this.processResponse.bind(this));
+    },
+
+    processResponse: function(object) {
+      if (object && object.div && object.stylesheet) {
+        if (object.stylesheet.indexOf('http') !== 0) {
+          if (object.stylesheet.indexOf('/') !== 0) {
+            object.stylesheet = '/' + object.stylesheet;
+          }
+          object.stylesheet = 'https://gist.github.com' + object.stylesheet;
+        }
+        this.defaultStylesheet = object.stylesheet || null;
+      }
+
+      this.stylesheet = this.stylesheet || this.defaultStylesheet;
+      this.applyStyle(this.stylesheet);
+      this.applyGist(object.div);
+
+      var _event = {
+        name: 'github-gist-ready',
+        detail: {gistId: this.gistid}
+      };
+      this.fireEvent(_event);
+    },
+
+    applyGist: function(htmlString) {
+      if (htmlString) {
+        this.$.gistEl.innerHTML = htmlString;
+      }
+    },
+
+    applyStyle: function(scrString) {
+      if (scrString) {
+        while (this.$.styleEl.hasChildNodes()) {
+          this.$.styleEl.removeChild(this.$.styleEl.lastChild);
+        }
+        this.$.styleEl.appendChild(document.createTextNode('@import url("' + scrString + '");'));
+      }
+
+      var _event = {
+        name: 'github-gist-stylesheet-changed',
+        detail: {stylesheet: scrString}
+      };
+      this.fireEvent(_event);
+    },
+
+    jsonp: function(url, callback) {
+      var errorCallback = function() {
+        var htmlString = '<p>Loading gist failed..</p>';
+        this.applyGist(htmlString);
+      }.bind(this);
+
+      this.callbackName = 'response_id_' + Math.random().toString(36).slice(2);
+      window[this.callbackName] = function(data) {
+        delete window[this.callbackName];
+        callback(data);
+      }.bind(this);
+
+      if (url) {
+        Polymer.dom(this.root).removeChild(this.$$('#scriptEl'));
+
+        var scriptEl = document.createElement('script');
+        scriptEl.src = url + '?callback=' + this.callbackName;
+        scriptEl.id = 'scriptEl';
+
+        Polymer.dom(this.root).appendChild(scriptEl);
+
+        this.$$('#scriptEl').removeEventListener('error', errorCallback);
+        this.$$('#scriptEl').addEventListener('error', errorCallback);
+      }
+    }
+  });
+</script>
