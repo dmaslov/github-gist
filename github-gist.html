@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <dom-module id="github-gist">
   <template>
-    <style id="styleEl"></style>
+    <div id="styleContainer"></div>
     <div id="gistEl"></div>
     <script id="scriptEl"></script>
   </template>
@@ -79,10 +79,10 @@
 
     applyStyle: function(scrString) {
       if (scrString) {
-        while (this.$.styleEl.hasChildNodes()) {
-          this.$.styleEl.removeChild(this.$.styleEl.lastChild);
-        }
-        this.$.styleEl.appendChild(document.createTextNode('@import url("' + scrString + '");'));
+        var importStyle = document.createElement('link');
+        importStyle.rel = 'stylesheet';
+        importStyle.href = scrString;
+        Polymer.dom(this.$.styleContainer).appendChild(importStyle);
       }
 
       var _event = {
