@@ -18,12 +18,6 @@
         githubGist = document.querySelector('github-gist');
       });
 
-      afterEach(function(done) {
-        githubGist.removeEventListener('github-gist-stylesheet-changed');
-
-        done();
-      });
-
       function testStylesheet(done) {
         githubGist.addEventListener('github-gist-stylesheet-changed', function(e) {
           flush(function() {
@@ -35,7 +29,7 @@
             expect(githubGist.stylesheet).to.be.equal(e.detail.stylesheet);
             expect(githubGist.stylesheet).to.be.not.equal(githubGist.defaultStylesheet);
 
-            expect(githubGist.querySelector('#styleEl')).to.be.an('object');
+            expect(githubGist.querySelector('#styleEl')).to.exist;
 
             done();
           });

@@ -22,9 +22,9 @@
     ".travis.yml"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.0.2"
+    "polymer": "Polymer/polymer#1.0.2"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#^3.1.7"
+    "web-component-tester": "Polymer/web-component-tester#4.3.1"
   }
 }
