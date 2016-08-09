@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <dom-module id="github-gist">
   <template>
-    <div id="styleContainer"></div>
+    <div id="styleEl"></div>
     <div id="gistEl"></div>
     <script id="scriptEl"></script>
   </template>
@@ -82,7 +82,7 @@
         var importStyle = document.createElement('link');
         importStyle.rel = 'stylesheet';
         importStyle.href = scrString;
-        Polymer.dom(this.$.styleContainer).appendChild(importStyle);
+        Polymer.dom(this.$.styleEl).appendChild(importStyle);
       }
 
       var _event = {
