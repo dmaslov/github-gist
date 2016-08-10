@@ -376,7 +376,7 @@
   }
   .gist .gist-file .gist-data .line-numbers .line-number
   {
-    font-family: Consolas, "Liberation Mono", Courier, monospace;    
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
     font-size: 10px;
   }
   .gist pre

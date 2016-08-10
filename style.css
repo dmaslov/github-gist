@@ -12,12 +12,7 @@ body{
 paper-input{
   margin-right: 40px;
   width: 156px;
-  display: inline-block;
-}
-
-.theme{
-  position: absolute;
-  bottom: 9px;
+  display: inline-block!important;
 }
 
 paper-button.active {

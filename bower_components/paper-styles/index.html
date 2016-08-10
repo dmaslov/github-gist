@@ -1,3 +1,4 @@
+<!doctype html>
 <!--
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -7,21 +8,17 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
+<html>
+<head>
 
-<link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../../iron-validator-behavior/iron-validator-behavior.html">
+  <title>paper-styles</title>
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../iron-component-page/iron-component-page.html">
 
-<script>
-  Polymer({
-    is: 'ssn-validator',
+</head>
+<body>
 
-    behaviors: [
-      Polymer.IronValidatorBehavior
-    ],
+  <iron-component-page></iron-component-page>
 
-    validate: function(value) {
-      // this regex validates incomplete ssn's (by design)
-      return !value || value.match(/^[0-9]{0,3}-[0-9]{0,2}-[0-9]{0,4}$/);
-    }
-  });
-</script>
+</body>
+</html>
