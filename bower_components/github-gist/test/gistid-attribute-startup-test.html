@@ -31,7 +31,6 @@
 
             expect(githubGist.stylesheet).to.be.not.empty;
             expect(githubGist.stylesheet).to.contain(stylePart);
-            console.log(githubGist.stylesheet);
 
             expect(githubGist.querySelector('#styleEl')).to.be.not.empty;
             expect(githubGist.querySelector('#scriptEl').getAttribute('src')).to.contain(scriptSrcPart);
