@@ -1,6 +1,6 @@
 {
   "name": "github-gist",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "authors": [
     "Dmitry Maslov <maslov.dmitrij@gmail.com>"
   ],
@@ -27,13 +27,13 @@
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#4.3.1"
   },
-  "_release": "1.2.5",
+  "_release": "1.2.6",
   "_resolution": {
     "type": "version",
-    "tag": "1.2.5",
-    "commit": "31de6e4671194342b570b9ee7d67498479cd1a40"
+    "tag": "1.2.6",
+    "commit": "842114347637d8e1c0f4accfcacba3727b7883aa"
   },
   "_source": "https://github.com/dmaslov/github-gist.git",
-  "_target": "1.2.5",
+  "_target": "1.2.6",
   "_originalSource": "github-gist"
 }
