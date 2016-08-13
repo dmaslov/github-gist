@@ -1,9 +1,18 @@
 .gist .gist-file{border-color: #fff;}
 .gist .blob-code-inner{color: #f8f8f2;}
-.gist .blob-num{color: #999;}
+.gist .blob-num{
+  color: #999;
+  border: solid #999;
+  border-width: 0 1px 0 0;
+}
+.gist .blob-wrapper{
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
 .gist .blob-num:hover{color: #f8f8f2;}
 .gist .highlight{background: #272822;}
-.gist .gist-file .gist-meta{background: #272822;}
+.gist .gist-meta{background: #272822;}
+.gist .gist-data{border-bottom: 1px solid #999;}
 .gist .blob-num{border-color: #999;}
 .gist .pl-k{color: #f92672;}
 .gist .pl-e{color: #f8f8f2;}
